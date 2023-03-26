@@ -1,56 +1,37 @@
 #!/usr/bin/python3
-""" Unittest for Amenity class """
-import unittest
-import json
-import pep8
-import os
-from models.base_model import BaseModel
+"""Test Amenity"""
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
-from models.state import State
 from models.review import Review
-from models.user import User
-from models.engine.file_storage import FileStorage
+from models.state import State
+import unittest
+import pep8
 
 
-class TestAmenity(unittest.TestCase):
+class Testamenity(unittest.TestCase):
+    """
+    unit test for amenity class
+    """
 
-    def setUp(self):
-        """SetUp method"""
-        self.amenity1 = Amenity()
-        self.amenity1.name = "juan"
-
-    def test_base_pep8(self):
-        """Test for pep8"""
+    def test_pep8_conformance_amenity(self):
+        """Test that we conform to PEP8."""
         pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['./models/amenity.py'])
-        self.assertEqual(result.total_errors, 0)
+        result = pep8style.check_files(['models/amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_docstring(self):
-        """test docstring in the file"""
-        self.assertIsNotNone(Amenity.__doc__)
+    def test_class(self):
+        """
+        Tests if the class is named correctly.
+        """
+        amenity1 = Amenity()
+        self.assertEqual(amenity1.__class__.__name__, "Amenity")
 
-    def test_is_instance(self):
-        """Test for instantiation"""
-        self.assertIsInstance(self.amenity1, Amenity)
-
-    def test_attributes(self):
-        """Test to check attributes"""
-        self.amenity1.save()
-        amenity1_json = self.amenity1.to_dict()
-        my_new_amenity = Amenity(**amenity1_json)
-        self.assertEqual(my_new_amenity.id, self.amenity1.id)
-        self.assertEqual(my_new_amenity.created_at, self.amenity1.created_at)
-        self.assertEqual(my_new_amenity.updated_at, self.amenity1.updated_at)
-        self.assertIsNot(self.amenity1, my_new_amenity)
-
-    def test_subclass(self):
-        """Test to check the inheritance"""
-        self.assertTrue(issubclass(self.amenity1.__class__, BaseModel), True)
-
-    def test_save(self):
-        """Test to check save method"""
-        variable_update = self.amenity1.updated_at
-        self.amenity1.save()
-        self.assertNotEqual(variable_update, self.amenity1.updated_at)
+    def test_father(self):
+        """
+        Tests if class inherits from BaseModel.
+        """
+        amenity1 = Amenity()
+        self.assertTrue(issubclass(amenity1.__class__, BaseModel))

@@ -1,1 +1,9 @@
-welhwlejlw
+/*
+ * === Global style. This applies to all the styles in the project ===
+ */
+
+/* Global style */
+body {
+  margin: 0;
+  padding: 0;
+}
